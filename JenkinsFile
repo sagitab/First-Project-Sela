@@ -1,0 +1,46 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Get code from your GitHub repository
+                git branch: 'main', url: 'https://github.com/sagitab/First-Project-Sela.git'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                echo 'Installing Python dependencies...'
+                sh '''
+                    python -m venv venv
+                    source venv/bin/activate || venv\\Scripts\\activate
+                    pip install --upgrade pip
+                    pip install requests
+                '''
+            }
+        }
+
+        stage('Run Script') {
+            steps {
+                echo 'Running Python script...'
+                sh '''
+                    source venv/bin/activate || venv\\Scripts\\activate
+                    python app.py
+                '''
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Pipeline finished.'
+        }
+        success {
+            echo '✅ Build completed successfully.'
+        }
+        failure {
+            echo '❌ Build failed.'
+        }
+    }
+}
