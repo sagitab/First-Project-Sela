@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    environment {
+        IMAGE_NAME= "firstprojectsela"
+        CONTAINER_NAME= "ynetapp"
+    }
 
     stages {
         stage('Checkout') {
@@ -9,28 +13,34 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Build image') {
             steps {
                 echo 'Installing Python dependencies...'
                 sh '''
-                    echo "hi"
-                    python -m venv venv
-                    source venv/bin/activate || venv\\Scripts\\activate
-                    pip install --upgrade pip
-                    pip install requests
+                    echo "build docker image"
+                    sh "docker build -t ${IMAGE_NAME} ."
                 '''
             }
         }
 
-        stage('Run Script') {
+        stage('Run container') {
             steps {
                 echo 'Running Python script...'
                 sh '''
-                    source venv/bin/activate || venv\\Scripts\\activate
-                    python app.py
+                    docker rm -f ${CONTAINER_NAME} || true
+                    docker run --name ${CONTAINER_NAME} --rm ${IMAGE_NAME}
                 '''
             }
         }
+        stage('Basic health-check'){
+            steps{
+                sh '''
+                    echo "test"
+                '''
+
+            }
+        }
+        
     }
 
     post {
