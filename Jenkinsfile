@@ -18,7 +18,7 @@ pipeline {
                 echo 'Installing Python dependencies...'
                 sh '''
                     echo "build docker image"
-                    sh "docker build -t ${IMAGE_NAME} ."
+                    docker build -t ${IMAGE_NAME} .
                 '''
             }
         }
