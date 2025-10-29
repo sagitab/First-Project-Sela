@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Get code from your GitHub repository
+                // Get code from your GitHub repository ok
                 git branch: 'main', url: 'https://github.com/sagitab/First-Project-Sela.git'
             }
         }
