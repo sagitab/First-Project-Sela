@@ -13,6 +13,7 @@ pipeline {
             steps {
                 echo 'Installing Python dependencies...'
                 sh '''
+                    echo "hi"
                     python -m venv venv
                     source venv/bin/activate || venv\\Scripts\\activate
                     pip install --upgrade pip
