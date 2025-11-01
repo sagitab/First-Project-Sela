@@ -18,6 +18,7 @@ pipeline {
                 echo 'Installing Python dependencies...'
                 sh '''
                     echo "build docker image"
+                    export DOCKER_HOST=tcp://host.docker.internal:2375
                     docker ps
                     docker build -t ${IMAGE_NAME} .
                 '''
