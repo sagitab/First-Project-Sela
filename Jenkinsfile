@@ -17,8 +17,17 @@ pipeline {
             steps {
                 echo 'Installing Python dependencies...'
                 sh '''
-                    echo "build docker image.."
-                    export DOCKER_HOST=tcp://host.docker.internal:2375
+                    # Remove old DinD container if it exists
+                    docker rm -f dind-docker || true
+
+                    # Start DinD
+                    docker run -d --privileged --name dind-docker --network host -p 2375:2375 docker:23-dind
+
+                    # Wait for DinD daemon to be ready
+                    sleep 5
+
+                    # Point Docker commands to DinD
+                    export DOCKER_HOST=tcp://localhost:2375
                     docker ps
                     docker build -t ${IMAGE_NAME} .
                 '''
