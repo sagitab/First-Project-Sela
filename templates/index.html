@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>YNet News Titles</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        h1 { color: #333; }
+        ul { list-style-type: none; padding: 0; }
+        li { 
+            background: #f5f5f5; 
+            margin: 10px 0; 
+            padding: 15px; 
+            border-radius: 5px;
+            border-left: 4px solid #007bff;
+        }
+        .count { color: #666; font-style: italic; }
+    </style>
+</head>
+<body>
+    <h1>📰 YNet News Headlines</h1>
+    <p class="count">Total headlines: {{ titles|length }}</p>
+    <ul>
+        {% for title in titles %}
+        <li>{{ title }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
