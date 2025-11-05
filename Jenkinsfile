@@ -27,7 +27,7 @@ pipeline {
             steps {
                 echo 'Running Python script...'
                 sh '''
-                    docker run "${IMAGE_NAME}"
+                    docker run -d -p 5000:5000 --name my-app "${IMAGE_NAME}"
                 '''
             }
         }
