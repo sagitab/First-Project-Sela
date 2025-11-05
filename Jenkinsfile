@@ -40,7 +40,7 @@ pipeline {
                     sleep 10
                     
                     # Health check with curl
-                    if curl -f http://localhost:8081; then
+                    if curl -f http://localhost:8081/health; then
                         echo "✅ Health check PASSED"
                     else
                         echo "❌ Health check FAILED"
