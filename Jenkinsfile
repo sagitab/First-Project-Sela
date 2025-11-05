@@ -19,7 +19,6 @@ pipeline {
                 sh '''
                     docker ps
                     docker build -t "${IMAGE_NAME}" .
-                    docker run "${IMAGE_NAME}"
                 '''
             }
         }
@@ -28,15 +27,26 @@ pipeline {
             steps {
                 echo 'Running Python script...'
                 sh '''
-                    docker rm -f ${CONTAINER_NAME} || true
-                    docker run --name ${CONTAINER_NAME} --rm ${IMAGE_NAME}
+                    docker run "${IMAGE_NAME}"
                 '''
             }
         }
         stage('Basic health-check'){
             steps{
                 sh '''
-                    echo "test"
+                    echo "Starting health check..."
+                    
+                    # Wait for app to start
+                    sleep 10
+                    
+                    # Health check with curl
+                    if curl -f http://localhost:8081; then
+                        echo "✅ Health check PASSED"
+                    else
+                        echo "❌ Health check FAILED"
+                        docker logs health-check-container
+                        exit 1
+                    fi
                 '''
 
             }
