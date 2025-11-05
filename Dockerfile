@@ -4,6 +4,10 @@ FROM python:3.11-slim
 # Set working directory
 WORKDIR /app
 
+# Set pip timeout and retry options
+RUN pip config set global.timeout 60
+RUN pip config set global.retries 10
+
 # Copy your Python script into the container
 COPY . .
 
