@@ -18,7 +18,6 @@ pipeline {
                 echo 'Installing Python dependencies...'
                 sh '''
                     docker ps
-                    docker build -t ${IMAGE_NAME} .
                 '''
             }
         }

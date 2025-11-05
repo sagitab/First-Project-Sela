@@ -5,6 +5,7 @@ services:
     image: jenkins/jenkins:lts
     container_name: jenkins
     user: root
+    privileged: true
     restart: unless-stopped
     ports:
       - "8081:8080"
