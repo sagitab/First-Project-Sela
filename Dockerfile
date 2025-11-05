@@ -1,12 +1,9 @@
 # Use an official lightweight Python image
-FROM python:3.11-slim
+FROM python:3.12-slim
 
 # Set working directory
 WORKDIR /app
 
-# Set pip timeout and retry options
-RUN pip config set global.timeout 60
-RUN pip config set global.retries 10
 
 # Copy your Python script into the container
 COPY . .
