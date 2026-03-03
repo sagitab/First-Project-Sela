@@ -48,7 +48,7 @@ pipeline {
                     sleep 30
                     
                     # Health check with curl
-                    if curl -f http://my-app:5000; then
+                    if curl -f http://host.docker.internal:5000; then
                         echo "✅ Health check PASSED"
                     else
                         echo "❌ Health check FAILED"
