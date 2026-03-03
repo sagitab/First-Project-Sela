@@ -28,6 +28,13 @@ pipeline {
             steps {
                 echo 'Running Python script...'
                 sh '''
+                    # Stop container if running
+                    docker stop my-app || true
+
+                    # Remove container if exists
+                    docker rm my-app || true
+
+                    # Run new container
                     docker run -d -p 5000:5000 --name my-app "${IMAGE_NAME}"
                 '''
             }
