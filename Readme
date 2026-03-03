@@ -1,0 +1,62 @@
+# 🚀 DevOps Project: Jenkins-DooD News Pipeline
+
+This project involves a **Flask-based web application** that is containerized with **Docker**. The application is managed through a **CI/CD pipeline** running in **Jenkins**, which is itself containerized. The pipeline utilizes **Docker-outside-of-Docker (DooD)** by mounting the host's Docker socket, allowing Jenkins to build, stop, and run containers directly on the host engine.
+
+The application fetches and displays **Ynet news headlines** on port 5000. The pipeline handles **building the Docker image, automated container replacement, and health validation** using shell-based testing. Sensitive configurations and repository access are securely handled using **Jenkins Credentials**.
+
+---
+## Clone the repo
+```
+git clone https://github.com/sagitab/First-Project-Sela.git
+cd First-Project-Sela
+```
+---
+## Start the app
+# start the jenkins container
+```
+docker-compose up -d
+```
+# do push to git to activate the jenkins pipeline
+---
+## log in to jenkins
+# go to
+```
+http://localhost:8081
+```
+# User Name- admin
+# to get the pass run
+```
+docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
+```
+---
+
+## 🔹 Key Features
+
+* **Jenkins-in-Docker:** Jenkins runs via `docker-compose` with the host's Docker socket (`/var/run/docker.sock`) mounted for container orchestration.
+* **Declarative Pipeline:** Managed via a `Jenkinsfile` for consistent and version-controlled deployment logic.
+* **Automated Lifecycle:** The pipeline automatically identifies, stops, and removes the existing application container before deploying the new version.
+* **Health Check Validation:** Includes a post-deployment stage that uses `curl` to verify the application is responding on port 5000 before marking the build as a success.
+* **Environment Parity:** Uses Docker to ensure the application runs identically in development and the Jenkins build environment.
+
+---
+
+## 🏗 Architecture & Pipeline Stages
+
+1.  **Checkout:** Pulls the latest source code from the GitHub repository.
+2.  **Build Image:** Executes `docker build -t news-app .` using the host's Docker engine.
+3.  **Run Container:** Stops any existing `news-app` container and starts a new one mapping port 5000.
+4.  **Health Check:** Performs a basic HTTP request to ensure the Flask server is live.
+
+---
+
+## 🛡 Security Considerations
+
+Mounting `/var/run/docker.sock` provides the Jenkins container with **root-level access** to the host's Docker daemon. While this is an efficient "DooD" (Docker-outside-of-Docker) pattern for DevOps demonstrations and local automation, it should be used with caution in shared environments. For production-grade security, consider using **Jenkins Agents** or **Rootless Docker** configurations.
+
+---
+
+## 📈 Future Improvements
+
+* **Artifact Registry:** Push successfully built images to **Docker Hub** or **Google Artifact Registry**.
+* **Kubernetes Orchestration:** Migrate the deployment stage from standalone Docker containers to a **GKE (Google Kubernetes Engine)** cluster.
+* **Monitoring & Logging:** Integrate **Prometheus** and **Grafana** to monitor the Flask application's performance and scraping success rates.
