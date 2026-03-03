@@ -45,7 +45,7 @@ pipeline {
                     echo "Starting health check..."
                     
                     # Wait for app to start
-                    sleep 10
+                    sleep 30
                     
                     # Health check with curl
                     if curl -f http://localhost:5000; then
