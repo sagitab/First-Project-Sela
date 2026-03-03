@@ -5,29 +5,41 @@ This project involves a **Flask-based web application** that is containerized wi
 The application fetches and displays **Ynet news headlines** on port 5000. The pipeline handles **building the Docker image, automated container replacement, and health validation** using shell-based testing. Sensitive configurations and repository access are securely handled using **Jenkins Credentials**.
 
 ---
+
 ## Clone the repository
+
 ```
 git clone https://github.com/sagitab/First-Project-Sela.git
 cd First-Project-Sela
 ```
 ---
+
 ## Start the app
+
 # start the jenkins container
+
 ```
 docker-compose up -d
 ```
 # do push to git to activate the jenkins pipeline
+
 ---
+
 ## log in to jenkins
+
 # go to
+
 ```
 http://localhost:8081
 ```
 # User Name- admin
+
 # to get the pass run
+
 ```
 docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
 ```
+
 ---
 
 ## 🔹 Key Features
