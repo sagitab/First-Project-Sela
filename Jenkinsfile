@@ -17,8 +17,8 @@ pipeline {
             steps {
                 echo 'Installing Python dependencies...'
                 sh '''
-                    docker ps
-                    docker build -t "${IMAGE_NAME}" .
+                    sudo docker ps
+                    sudo docker build -t "${IMAGE_NAME}" .
                 '''
             }
         }
